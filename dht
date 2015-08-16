@@ -52,9 +52,9 @@ humidity, c = Adafruit_DHT.read_retry(sensor, pin)
 # If this happens try again!
 if humidity is not None and c is not None:
 	f = c * 9 / 5 + 32
-	print 'temperature farenheit: {0:0.1f}F'.format(f)
-	print 'temperature celsius: {0:0.1f}C'.format(c)
+	print 'temperature-farenheit: {0:0.1f}F'.format(f)
+	print 'temperature-celsius: {0:0.1f}C'.format(c)
 	print 'humidity: {0:0.1f}%'.format(humidity)
 else:
-	print 'failed to get reading. try again!'
+	print >>sys.stderr, 'failed to get reading. try again!'
 	sys.exit(1)
