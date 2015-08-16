@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+#
+# Install the gpio command (wiringPi) and DHT Python
+# libraries on a raspberry pi
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: August 13, 2015
+# License: MIT
+
+mkdir -p ~/dev
+
+echo '--- installing wiringPi ---'
+git clone git://git.drogon.net/wiringPi ~/dev/wiringPi
+cd ~/dev/wiringPi || exit 1
+git pull || exit 1
+./build || exit 1
+gpio readall || exit 1
+echo
+echo 'gpio installed!'
+which gpio
+
+echo '--- installing Python DHT library ---'
+git clone git://github.com/adafruit/Adafruit_Python_DHT ~/dev/Adafruit_Python_DHT
+cd ~/dev/Adafruit_Python_DHT || exit 1
+sudo apt-get update || exit 1
+sudo apt-get install -y build-essential python-dev || exit 1
+sudo python setup.py install || exit 1
+echo 'adafruit DHT library installed'

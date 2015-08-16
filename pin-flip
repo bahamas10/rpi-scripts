@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+#
+# simple script to flip an output high and low
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: August 13, 2015
+# License: MIT
+
+pin=$1
+delay=${2:-1}
+
+if [[ -z $pin ]]; then
+	echo 'usage: pin-flip <pin#> [delay_seconds]' 2>&1
+	echo 'ex: pin-flip 0 # flip pin 0 to HIGH then LOW'
+	exit 1
+fi
+
+gpio write "$pin" 0
+gpio mode "$pin" OUT
+
+echo -n 'turning on... '
+gpio write "$pin" 1
+echo 'done.'
+
+sleep "$delay"
+
+echo -n 'turning off... '
+gpio write "$pin" 0
+echo 'done.'

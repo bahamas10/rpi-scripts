@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# Same as pin-input-status but with ASCII art
+#
+# Author: Dave Eddy <dave@daveeddy.com>
+# Date: August 13, 2015
+# License: MIT
+
+pin=$1
+delay=${2:-.25}
+
+if [[ -z $pin ]]; then
+	echo 'usage: pin-input-status <pin#> [delay_seconds]' >&2
+	echo 'ex: pin-input-status 0 # watch pin 0 and print if it is HIGH or LOW' >&2
+fi
+
+gpio mode "$pin" IN
+while true; do
+	out=$(gpio read "$pin")
+	if ((out == 0)); then
+		printf '\r%s' 'opened |------------|        |------------|'
+	else
+		printf '\r%s' 'closed |----------------||----------------|'
+	fi
+	sleep "$delay"
+done
